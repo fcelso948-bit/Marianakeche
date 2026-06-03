@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Studio Mariana Keche | Catálogo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#fff;
+color:#111;
+}
+
+/* HEADER */
+
+header{
+background:linear-gradient(135deg,#000,#111,#1d1d1d);
+color:#fff;
+text-align:center;
+padding:80px 20px;
+}
+
+header h1{
+font-family:'Cormorant Garamond',serif;
+font-size:4rem;
+font-weight:300;
+letter-spacing:8px;
+}
+
+header p{
+margin-top:10px;
+color:#ccc;
+letter-spacing:2px;
+}
+
+/* FILTROS */
+
+.filtros{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+padding:25px;
+background:#f6f6f6;
+border-bottom:1px solid #e5e5e5;
+}
+
+.filtros button{
+padding:12px 20px;
+border:1px solid #000;
+background:#fff;
+cursor:pointer;
+border-radius:30px;
+transition:.3s;
+font-size:13px;
+text-transform:uppercase;
+}
+
+.filtros button:hover{
+background:#000;
+color:#fff;
+}
+
+/* GALERIA */
+
+.galeria{
+max-width:1400px;
+margin:auto;
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+gap:25px;
+}
+
+/* CARD */
+
+.card{
+border:1px solid #eee;
+border-radius:16px;
+overflow:hidden;
+transition:.3s;
+background:#fff;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 30px rgba(0,0,0,.12);
+}
+
+.card img{
+width:100%;
+height:420px;
+object-fit:cover;
+cursor:pointer;
+transition:.3s;
+}
+
+.card img:hover{
+transform:scale(1.03);
+}
+
+.info{
+padding:15px;
+}
+
+.info h3{
+font-size:18px;
+margin-bottom:5px;
+}
+
+.info p{
+font-size:13px;
+color:#777;
+}
+
+/* BOTÃO WHATSAPP */
+
+.whatsapp{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#000;
+color:#fff;
+padding:15px 22px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+z-index:999;
+}
+
+.whatsapp:hover{
+background:#333;
+}
+
+/* FOOTER */
+
+footer{
+background:#000;
+color:#fff;
+text-align:center;
+padding:25px;
+margin-top:40px;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:768px){
+header h1{
+font-size:2.5rem;
+letter-spacing:4px;
+}
+
+.card img{
+height:320px;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Studio Mariana Keche</h1>
+<p>Catálogo de Inspirações para sua Próxima Tatuagem</p>
+</header>
+
+<!-- FILTROS -->
+
+<section class="filtros">
+
+<button onclick="filtrar('todos')">Todos</button>
+<button onclick="filtrar('minimalista')">Minimalista</button>
+<button onclick="filtrar('floral')">Floral</button>
+<button onclick="filtrar('borboletas')">Borboletas</button>
+<button onclick="filtrar('frases')">Frases</button>
+<button onclick="filtrar('ornamental')">Ornamental</button>
+<button onclick="filtrar('feminino')">Feminino</button>
+<button onclick="outro()">Outro Estilo</button>
+
+</section>
+
+<!-- GALERIA -->
+
+<section class="galeria" id="galeria"></section>
+
+<!-- WHATSAPP FIXO -->
+
+<a class="whatsapp"
+href="https://wa.me/5562985993081"
+target="_blank">
+WhatsApp
+</a>
+
+<footer>
+Studio Mariana Keche © 2026
+</footer>
+
+<script>
+
+const whatsapp = "5562985993081";
+
+/* CATEGORIAS */
+
+const categorias = {
+minimalista:"Minimalista",
+floral:"Floral",
+borboletas:"Borboletas",
+frases:"Frases e Escritas",
+ornamental:"Ornamental",
+feminino:"Feminino Delicado"
+};
+
+const galeria = document.getElementById("galeria");
+
+/* GERAR 60 IMAGENS (10 POR CATEGORIA) */
+
+for(const cat in categorias){
+
+for(let i=1;i<=10;i++){
+
+const ref =
+cat.toUpperCase()+"-"+String(i).padStart(3,'0');
+
+galeria.innerHTML += `
+<div class="card ${cat}">
+
+<img src="img/${cat}/${i}.jpg"
+onclick="abrirWhatsapp('${cat}',${i})">
+
+<div class="info">
+<h3>${categorias[cat]}</h3>
+<p>Ref: ${ref}</p>
+</div>
+
+</div>
+`;
+}
+
+}
+
+/* FILTRO */
+
+function filtrar(cat){
+
+const cards=document.querySelectorAll(".card");
+
+cards.forEach(c=>{
+
+if(cat==="todos"){
+c.style.display="block";
+}else{
+c.style.display=
+c.classList.contains(cat)?"block":"none";
+}
+
+});
+
+}
+
+/* WHATSAPP POR IMAGEM */
+
+function abrirWhatsapp(cat,num){
+
+const ref =
+cat.toUpperCase()+"-"+String(num).padStart(3,'0');
+
+const msg =
+`Olá Mariana! Gostei da inspiração ${ref} e gostaria de orçamento.`;
+
+window.open(
+`https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`,
+"_blank"
+);
+
+}
+
+/* OUTRO ESTILO */
+
+function outro(){
+
+const msg =
+"Olá, Mariana! Não encontrei meu estilo no catálogo e gostaria de uma ideia personalizada.";
+
+window.open(
+`https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`,
+"_blank"
+);
+
+}
+
+</script>
+
+</body>
+</html>
